@@ -1,7 +1,6 @@
-import { getSession } from 'next-auth/client';
+import { getSession } from 'next-auth/react';
 
-function Admin ({session}) {
-    console.log(session)
+function Admin () {
     return (
         <div>
             <h1>ADMIN PAGE</h1>
@@ -9,14 +8,21 @@ function Admin ({session}) {
     )
 }
 
-export default Admin;
-
-export async function getServerSideProps(context){
-    const session = await getSession(context);
-    return {
-        props: {
-            data:session ? "list of really nasty shit" : "letters to barny"
-        }
+export async function getServerSideProps(context) {
+    const session = await getSession(context)
+  
+    if (!session) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      }
     }
-
+  
+    return {
+      props: { session }
+    }
 }
+
+export default Admin;

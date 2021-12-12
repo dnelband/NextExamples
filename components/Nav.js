@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import navStyles from '../styles/Nav.module.css';
 import { useRouter } from 'next/router'
-import { signIn, signOut, useSession } from 'next-auth/client';
+import { useSession } from 'next-auth/react';
 
 const Nav = () => {
     
-    const [ session,loading] = useSession();
+    const {data:session} = useSession();
 
     const router = useRouter()
     let backButtonDisplay;
@@ -17,12 +17,17 @@ const Nav = () => {
         )
     }
 
-    let userAuthDisplay;
-    console.log(session)
+    let userActionDisplay = (
+        <Link href="/api/auth/signin">
+            Signin
+        </Link>
+    )
     if (session){
-        userAuthDisplay = <li><a onClick={signOut}><img width="25" src={session.user.image}/> Sign out</a></li>
-    } else {
-        userAuthDisplay = <li><a onClick={signIn}>Sign in</a></li>
+        userActionDisplay = (
+            <Link href="/api/auth/signout">
+                Signout
+            </Link>
+        )   
     }
 
     return (
@@ -35,7 +40,9 @@ const Nav = () => {
                 <li>
                     <Link href="/list">List</Link>
                 </li>
-                {userAuthDisplay}
+                <li>
+                    {userActionDisplay}
+                </li>
             </ul>
         </nav>
     )
