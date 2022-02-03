@@ -7,8 +7,11 @@ const Nav = () => {
     
     const {data:session} = useSession();
 
-    const router = useRouter()
-    let backButtonDisplay;
+   const router = useRouter()
+    let backButtonDisplay; 
+
+    console.log(router)
+
     if (router.pathname !== "/"){
         backButtonDisplay = (
             <li>
