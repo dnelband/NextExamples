@@ -10,8 +10,6 @@ const Nav = () => {
    const router = useRouter()
     let backButtonDisplay; 
 
-    console.log(router)
-
     if (router.pathname !== "/"){
         backButtonDisplay = (
             <li>
